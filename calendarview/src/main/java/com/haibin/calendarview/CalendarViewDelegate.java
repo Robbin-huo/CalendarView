@@ -1097,8 +1097,10 @@ final class CalendarViewDelegate {
                 a.setScheme(TextUtils.isEmpty(d.getScheme()) ? getSchemeText() : d.getScheme());
                 a.setSchemeColor(d.getSchemeColor());
                 a.setSchemes(d.getSchemes());
+                a.setTypeTag(d.getTypeTag());
             } else {
                 a.setScheme("");
+                a.setTypeTag("");
                 a.setSchemeColor(0);
                 a.setSchemes(null);
             }

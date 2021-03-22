@@ -301,8 +301,10 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
                 a.setScheme(TextUtils.isEmpty(d.getScheme()) ? mDelegate.getSchemeText() : d.getScheme());
                 a.setSchemeColor(d.getSchemeColor());
                 a.setSchemes(d.getSchemes());
+                a.setTypeTag(d.getTypeTag());
             } else {
                 a.setScheme("");
+                a.setTypeTag("");
                 a.setSchemeColor(0);
                 a.setSchemes(null);
             }

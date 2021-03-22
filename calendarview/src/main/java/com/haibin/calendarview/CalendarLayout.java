@@ -148,6 +148,8 @@ public class CalendarLayout extends LinearLayout {
     private float mLastY;
     private float mLastX;
     private boolean isAnimating = false;
+    private int mCalendarHeight = 500;
+    private int mCalendarHeightMin = 300;
 
     /**
      * 内容布局id
@@ -592,7 +594,7 @@ public class CalendarLayout extends LinearLayout {
         mMonthView = findViewById(R.id.vp_month);
         mWeekPager = findViewById(R.id.vp_week);
         if (getChildCount() > 0) {
-            mCalendarView = (CalendarView) getChildAt(0);
+            mCalendarView = (CalendarView) getChildAt(2);
         }
         mContentView = findViewById(mContentViewId);
         mYearView = findViewById(R.id.selectLayout);
@@ -762,6 +764,96 @@ public class CalendarLayout extends LinearLayout {
             }
         });
         objectAnimator.start();
+        return true;
+    }
+
+
+    /**
+     * 缩放
+     *
+     * @param duration 时长
+     * @return 成功或者失败
+     */
+    public boolean scale(int duration) {
+        if (mGestureMode == GESTURE_MODE_DISABLED) {
+            requestLayout();
+        }
+        if (isAnimating) {
+            return false;
+        }
+        ValueAnimator va ;
+        mCalendarHeight=mMonthView.getHeight();
+        mCalendarHeightMin=mItemHeight*2-20;
+        va = ValueAnimator.ofInt(mCalendarHeight,mCalendarHeightMin);
+        va.setDuration(duration);
+        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //获取当前的height值
+                int h =(Integer)valueAnimator.getAnimatedValue();
+                //动态更新view的高度
+                mCalendarView.getLayoutParams().height = h;
+                mCalendarView.requestLayout();
+            }
+        });
+        va.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isAnimating = false;
+                showWeek();
+                isWeekView = true;
+            }
+        });
+        //开始动画
+        va.start();
+        return true;
+    }
+
+    /**
+     * 展开
+     *
+     * @param duration 时长
+     * @return 成功或者失败
+     */
+    public boolean unfold(int duration) {
+        if (mGestureMode == GESTURE_MODE_DISABLED) {
+            requestLayout();
+        }
+        if (isAnimating) {
+            return false;
+        }
+        ValueAnimator va ;
+        va = ValueAnimator.ofInt(mCalendarHeightMin,mCalendarHeight);
+        va.setDuration(duration);
+        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //获取当前的height值
+                int h =(Integer)valueAnimator.getAnimatedValue();
+                //动态更新view的高度
+                mCalendarView.getLayoutParams().height = h;
+                mCalendarView.requestLayout();
+            }
+        });
+        va.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (mGestureMode == GESTURE_MODE_DISABLED) {
+                    requestLayout();
+                }
+                hideWeek(true);
+                if (mDelegate.mViewChangeListener != null && isWeekView) {
+                    mDelegate.mViewChangeListener.onViewChange(true);
+                }
+                mCalendarView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                mCalendarView.requestLayout();
+                isWeekView = false;
+            }
+        });
+        //开始动画
+        va.start();
         return true;
     }
 

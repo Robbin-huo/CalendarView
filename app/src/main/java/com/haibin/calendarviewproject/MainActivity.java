@@ -116,11 +116,12 @@ public class MainActivity extends BaseActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                mCalendarLayout.expand();
+                                mCalendarLayout.unfold(240);
                                 break;
                             case 1:
-                                boolean result = mCalendarLayout.shrink();
-                                Log.e("shrink", " --  " + result);
+                                mCalendarLayout.scale(240);
+//                                boolean result = mCalendarLayout.shrink();
+//                                Log.e("shrink", " --  " + result);
                                 break;
                             case 2:
                                 mCalendarView.scrollToPre(false);

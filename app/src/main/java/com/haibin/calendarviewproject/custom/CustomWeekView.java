@@ -1,6 +1,7 @@
 package com.haibin.calendarviewproject.custom;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
+import com.haibin.calendarviewproject.R;
 
 /**
  * 演示一个变态需求的周视图
@@ -123,6 +125,11 @@ public class CustomWeekView extends WeekView {
             mPointPaint.setColor(Color.GRAY);
         }
 
+        if (calendar.getTypeTag()=="1"){
+            int cx = x + mItemWidth / 2;
+            int cy =  mItemHeight / 2;
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_yichang), cx-mRadius, cy-mRadius, null);
+        }
         canvas.drawCircle(x + mItemWidth / 2, mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
     }
 

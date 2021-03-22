@@ -77,6 +77,9 @@ public abstract class MonthView extends BaseMonthView {
         onLoopStart(x, y);
         boolean isSelected = d == mCurrentItem;
         boolean hasScheme = calendar.hasScheme();
+        String type= calendar.getTypeTag();
+        String scheme=calendar.getScheme();
+
 
         if (hasScheme) {
             //标记的日子

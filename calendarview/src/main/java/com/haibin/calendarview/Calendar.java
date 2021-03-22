@@ -92,6 +92,7 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
      * using addScheme(int schemeColor,String scheme); multi scheme
      */
     private String scheme;
+    private String typeTag;
 
     /**
      * 各种自定义标记颜色、没有则选择默认颜色，如果使用多标记，请使用下面API
@@ -180,6 +181,14 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
 
     public void setScheme(String scheme) {
         this.scheme = scheme;
+    }
+
+    public void setTypeTag(String typeTag) {
+        this.typeTag = typeTag;
+    }
+
+    public String getTypeTag() {
+        return typeTag;
     }
 
 
@@ -396,10 +405,12 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
                 defaultScheme : calendar.getScheme());
         setSchemeColor(calendar.getSchemeColor());
         setSchemes(calendar.getSchemes());
+        setTypeTag(calendar.getTypeTag());
     }
 
     final void clearScheme() {
         setScheme("");
+        setTypeTag("");
         setSchemeColor(0);
         setSchemes(null);
     }

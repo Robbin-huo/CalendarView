@@ -1,13 +1,16 @@
 package com.haibin.calendarviewproject.custom;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
+import com.haibin.calendarviewproject.R;
 
 /**
  * 演示一个变态需求的月视图
@@ -122,6 +125,11 @@ public class CustomMonthView extends MonthView {
             mPointPaint.setColor(Color.WHITE);
         } else {
             mPointPaint.setColor(Color.GRAY);
+        }
+        if (calendar.getTypeTag()=="1"){
+            int cx = x + mItemWidth / 2;
+            int cy = y + mItemHeight / 2;
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_yichang), cx-mRadius, cy-mRadius, null);
         }
 
         canvas.drawCircle(x + mItemWidth / 2, y + mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
